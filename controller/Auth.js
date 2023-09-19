@@ -4,22 +4,29 @@ exports.CreateUser = (req, res) => {
   const user = new User(req.body);
   try{
     const doc = user.save();
-    res.status(200).json(doc);
+    res.status(201).json(doc);
   }catch(err){
     res.status(401).json(err)
   }
 
 };
 
-exports.LoginUser = (req, res) => {
+exports.LoginUser = async (req, res) => {
+  //console.log('req', req)
   //const user = new User(req.body);
   
   try{
-    const user = User.findOne({email: req.body.email}, 'id name email');
-    if(user.password === req.body.password){
-      res.status(200).json(user);
-    }else{
-      res.status(401).json({message: 'invalid credential'});
+    const user = await User.findOne(
+      { email: req.body.email },
+    ).exec();
+    // TODO: this is just temporary, we will use strong password auth
+    if (!user) {
+      res.status(401).json({ message: 'no such user email' });
+    } else if (user.password === req.body.password) {
+        // TODO: We will make addresses independent of login
+      res.status(200).json({id:user.id, email:user.email, name:user.name,addresses:user.addresses});
+    } else {
+      res.status(401).json({ message: 'invalid credentials' });
     }
   }catch(err){
     res.status(401).json(err)

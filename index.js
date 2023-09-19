@@ -6,7 +6,9 @@ const { CreateProduct, FetchAllProducts } = require('./controller/Product');
 const productsRouter = require('./routes/Products');
 const categoryRouter = require('./routes/Category');
 const brandsRouter = require('./routes/Brands');
-
+const usersRouter = require('./routes/Users');
+const CartRouter = require('./routes/Cart');
+const authRouter = require('./routes/Auth');
 
 const uri = "mongodb+srv://anilkanhasoft:Anil%40567@cluster0.12fko2j.mongodb.net/shop?retryWrites=true&w=majority";
 
@@ -17,11 +19,14 @@ main(
     console.log('conn establised')
 ).catch( err => console.log('error',err) )
 
-server.use(cors({exposedHeaders: ['x-total-count']}))
+server.use(cors({exposedHeaders: ['X-Total-Count']}))
 server.use( express.json() )
 server.use( '/products', productsRouter.router )
 server.use( '/categories', categoryRouter.router )
 server.use( '/brands', brandsRouter.router )
+server.use( '/auth', authRouter.router )
+server.use( '/cart', CartRouter.router )
+server.use( '/users', usersRouter.router )
 //server.use( '/fetchAllProducts', productsRouter.router )
 
 server.get('/', (req, res)=>{

@@ -37,19 +37,21 @@ exports.FetchAllProducts = async (req, res) => {
   const totalDocs = await totalProductsQuery.count().exec();
 
   if (req.query._page && req.query._limit) {
+
     const pageSize = req.query._limit;
     const page = req.query._page;
     await query.skip(pageSize * (page - 1));
   }
+  //console.log('req.query', req.query)
 
   console.log('totalDocs',totalDocs)
 
   try {
     const docs = await query.exec();
-    res.set('X-Total-Count', totalDocs)
+    res.set('X-Total-Count', totalDocs);
     res.status(200).json(docs);
   } catch (err) {
-    res.status(401).json(err);
+    res.status(400).json(err);
   }
 };
 
