@@ -46,3 +46,13 @@ exports.updateCartById = async (req, res) => {
     res.status(401).json(err);
   }
 };
+
+exports.deleteFromCart = async (req, res) => {
+  const { id } = req.params;
+  try {
+    let doc = await Cart.findByIdAndDelete(id);
+    res.status(200).json(doc);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};

@@ -8,6 +8,7 @@ const categoryRouter = require('./routes/Category');
 const brandsRouter = require('./routes/Brands');
 const usersRouter = require('./routes/Users');
 const CartRouter = require('./routes/Cart');
+const ordersRouter = require('./routes/Order');
 const authRouter = require('./routes/Auth');
 
 const uri = "mongodb+srv://anilkanhasoft:Anil%40567@cluster0.12fko2j.mongodb.net/shop?retryWrites=true&w=majority";
@@ -27,6 +28,7 @@ server.use( '/brands', brandsRouter.router )
 server.use( '/auth', authRouter.router )
 server.use( '/cart', CartRouter.router )
 server.use( '/users', usersRouter.router )
+server.use( '/orders', ordersRouter.router )
 //server.use( '/fetchAllProducts', productsRouter.router )
 
 server.get('/', (req, res)=>{
