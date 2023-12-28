@@ -14,6 +14,7 @@ exports.CreateProduct = (req, res) => {
 };
 
 exports.FetchAllProducts = async (req, res) => {
+  console.log('req', req)
   // filter = {"category":["smartphone","laptops"]}
   // sort = {_sort:"price",_order="desc"}
   // pagination = {_page:1,_limit=10}
@@ -44,10 +45,11 @@ exports.FetchAllProducts = async (req, res) => {
   }
   //console.log('req.query', req.query)
 
-  console.log('totalDocs',totalDocs)
+ // console.log('totalDocs',totalDocs)
 
   try {
     const docs = await query.exec();
+   // console.log('docs', docs)
     res.set('X-Total-Count', totalDocs);
     res.status(200).json(docs);
   } catch (err) {
